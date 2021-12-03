@@ -1,24 +1,21 @@
 import logo from './logo.svg';
 import './App.css';
+import ImagesList from './ImagesList.js'
+import { useEffect, useState } from 'react'
 
 function App() {
+  // get images from backend
+  const [images, setImages] = useState([])
+
+  useEffect(async () => {
+    const response = await fetch('https://dqfji3ug64.execute-api.us-east-1.amazonaws.com/dev/images') 
+    const images = await response.json()
+    setImages(images)
+  })
+
+  // pass images into ImagesList component
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ImagesList data={images} />
   );
 }
 
